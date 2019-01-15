@@ -80,24 +80,7 @@ def runGame():
             elif event.type == KEYDOWN:
                 snake1Direction = getDirection(1, event, direction)
                 snake2Direction = getDirection(2, event, direction2)
-
-                if (event.key == K_LEFT) and direction != RIGHT:
-                    direction = LEFT
-                elif(event.key == K_a) and direction2 != RIGHT:
-                    direction2 = LEFT
-                elif (event.key == K_RIGHT) and direction != LEFT:
-                    direction = RIGHT
-                elif (event.key == K_d) and direction2 != LEFT:
-                    direction2 = RIGHT
-                elif (event.key == K_UP) and direction != DOWN:
-                    direction = UP
-                elif (event.key == K_w) and direction2 != DOWN:
-                    direction2 = UP
-                elif (event.key == K_DOWN) and direction != UP:
-                    direction = DOWN
-                elif (event.key == K_s) and direction2 != UP:
-                    direction2 = DOWN
-                elif event.key == K_ESCAPE:
+            elif event.key == K_ESCAPE:
                     terminate()
 
         # check if the worm has hit itself or the edge
@@ -137,23 +120,23 @@ def runGame():
             del wormCoords2[-1] #remove worm2's tail segment
 
         # move the worm by adding a segment in the direction it is moving
-        if direction == UP:
+        if snake1Direction == UP:
             newHead = {'x': wormCoords[HEAD]['x'], 'y': wormCoords[HEAD]['y'] - 1}
-        elif direction == DOWN:
+        elif snake1Direction == DOWN:
             newHead = {'x': wormCoords[HEAD]['x'], 'y': wormCoords[HEAD]['y'] + 1}
-        elif direction == LEFT:
+        elif snake1Direction == LEFT:
             newHead = {'x': wormCoords[HEAD]['x'] - 1, 'y': wormCoords[HEAD]['y']}
-        elif direction == RIGHT:
+        elif snake1Direction == RIGHT:
             newHead = {'x': wormCoords[HEAD]['x'] + 1, 'y': wormCoords[HEAD]['y']}
 
         #Moving worm2 using the keys a,w,s,d
-        if direction2 == UP:
+        if snake2Direction == UP:
             newHead2 = {'x': wormCoords2[HEAD]['x'], 'y': wormCoords2[HEAD]['y'] - 1}
-        elif direction2 == DOWN:
+        elif snake2Direction  == DOWN:
             newHead2 = {'x': wormCoords2[HEAD]['x'], 'y': wormCoords2[HEAD]['y'] + 1}
-        elif direction2 == LEFT:
+        elif snake2Direction  == LEFT:
             newHead2 = {'x': wormCoords2[HEAD]['x'] - 1, 'y': wormCoords2[HEAD]['y']}
-        elif direction2 == RIGHT:
+        elif snake2Direction  == RIGHT:
             newHead2 = {'x': wormCoords2[HEAD]['x'] + 1, 'y': wormCoords2[HEAD]['y']}
 
         wormCoords.insert(0, newHead)
@@ -173,9 +156,24 @@ def runGame():
 def getDirection(snakeNumber, event, lastDirection):
     direction = lastDirection
     if snakeNumber == 1:
-    #TODO: add stuff for snake 1
+        if (event.key == K_LEFT) and lastDirection != RIGHT:
+            direction = LEFT
+        elif (event.key == K_RIGHT) and lastDirection!= LEFT:
+            direction = RIGHT
+        elif (event.key == K_UP) and lastDirection!= DOWN:
+            direction = UP
+        elif (event.key == K_DOWN) and lastDirection!= UP:
+            direction = DOWN
     elif snakeNumber == 2:
-    #TODO: add stuff
+        if (event.key == K_a) and lastDirection!= RIGHT:
+            direction = LEFT
+        elif (event.key == K_d) and lastDirection!= LEFT:
+            direction = RIGHT
+        elif (event.key == K_w) and lastDirection!= DOWN:
+            direction = UP
+        elif (event.key == K_s) and lastDirection!= UP:
+            direction = DOWN
+    return direction
 
 def drawPressKeyMsg():
     pressKeySurf = BASICFONT.render('Press a key to play.', True, DARKGRAY)
